@@ -1,6 +1,7 @@
 package com.flaviano.todo.entity;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import com.flaviano.todo.enums.TaskStatus;
 import jakarta.persistence.Entity;
@@ -50,8 +51,12 @@ public class Task {
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        LocalDateTime agora = LocalDateTime.now(
+            ZoneId.of("America/Sao_Paulo")
+        );
+
+        this.createdAt = agora;
+        this.updatedAt = agora;
         
         if (this.status == null) {
         this.status = TaskStatus.PENDING;
@@ -60,6 +65,8 @@ public class Task {
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now(
+            ZoneId.of("America/Sao_Paulo")
+        );
     }
 }
